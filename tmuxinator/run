@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+docker run \
+	--rm \
+	--tty \
+	--interactive \
+	--init \
+	-e TMUX_SOCKET=$TMUX_SOCKET_IN_CONTAINER \
+	--mount type=bind,src=/etc/localtime,dst=/etc/localtime,readonly \
+	--mount type=bind,src=$PWD,dst=/project \
+	--mount type=bind,src=$TMUX_SOCKET,dst=$TMUX_SOCKET_IN_CONTAINER \
+	--mount type=bind,src=$TMUX_SESSIONS_DIR,dst=/root/.tmuxinator \
+	--workdir /project \
+	tmuxinator \
+	"$@"
