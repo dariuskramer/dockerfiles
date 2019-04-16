@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+docker run \
+	--detach \
+	--rm \
+	--tty \
+	--interactive \
+	--init \
+	--name taskwarrior \
+	--mount type=bind,src=/etc/localtime,target=/etc/localtime,readonly \
+	--mount type=bind,src=$TASKRC,target=/root/.taskrc \
+	--mount type=bind,src=$TASKDATA,target=/root/.task \
+	taskwarrior "$@"
